@@ -58,10 +58,10 @@ curl https://sh.rustup.rs -sSf | sh
 source $HOME/.cargo/env
 ```
 
-7. Install toml
+7. Install deno
 
 ```
-cargo install toml-cli
+sudo snap install deno
 ```
 
 8. Build and install embassy-sdk
