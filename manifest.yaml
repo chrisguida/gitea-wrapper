@@ -93,11 +93,12 @@ volumes:
     type: assets
 interfaces:
   main:
-    name: Web UI
-    description: Gitea Browser Interface
+    name: Web UI / Git HTTPS/SSH
+    description: 'Port 80: Browser Interface and HTTP Git Interface / Port 22: Git SSH Interface'
     tor-config:
       port-mapping:
         80: "3000"
+        22: "22"
     lan-config:
       443:
         ssl: true
@@ -106,19 +107,8 @@ interfaces:
     protocols:
       - tcp
       - http
-  ssh:
-    name: SSH
-    description: SSH interface - allows authentication to git repos via SSH keys
-    tor-config:
-      port-mapping:
-        22: "22"
-    # lan-config:
-    #   22:
-    #     internal: 22
-    ui: false
-    protocols:
-      - tcp
       - ssh
+      - git
 alerts: {}
 backup:
   create:
