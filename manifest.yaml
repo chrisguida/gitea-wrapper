@@ -1,8 +1,9 @@
 id: gitea
 title: "Gitea"
 version: 1.16.9
-release-notes: "Initial release of gitea for Embassy OS"
-license: AGPL
+release-notes: |
+    Initial release of Gitea for EmbassyOS
+license: MIT
 wrapper-repo: "https://github.com/chrisguida/gitea-wrapper"
 upstream-repo: "https://github.com/go-gitea/gitea"
 support-site: "https://docs.gitea.io/en-us/"
@@ -13,30 +14,20 @@ description:
   long: |
     Gitea is a community managed lightweight code hosting solution written in Go. It is published under the MIT license.
 assets:
-  license: LICENSE
-  icon: icon.svg
+  license: gitea/LICENSE
+  icon: icon.png
   instructions: instructions.md
   docker-images: image.tar
 main:
   type: docker
   image: main
   entrypoint: "/usr/local/bin/docker_entrypoint.sh"
-  # args: ["/bin/s6-svscan", "/etc/s6"]
   mounts:
     main: /data
 health-checks:
-  # version:
-  #   name: Database
-  #   success-message: Backend is reachable and responsive.
-  #   type: docker
-  #   image: main
-  #   entrypoint: health-check.sh
-  #   args: ["api"]
-  #   io-format: json
-  #   inject: true
   web:
-    name: Web Interface
-    success-message: Gitea is ready to be visited in your browser.
+    name: HTTP Interface (Web & Git HTTP over Tor)
+    success-message: Gitea is ready to be visited in your browser, and your git repos can now be interacted with.
     type: docker
     image: main
     entrypoint: check-web.sh
@@ -45,46 +36,11 @@ health-checks:
     inject: true
 config:
   get:
-    type: docker
-    image: compat
-    system: true
-    entrypoint: compat
-    args:
-      - config
-      - get
-      - /data
-      - "/mnt/assets/config_spec.yaml"
-    mounts:
-      compat: /mnt/assets
-      main: /datadir
-    io-format: yaml
+    type: script
   set:
-    type: docker
-    image: compat
-    system: true
-    entrypoint: compat
-    args:
-      - config
-      - set
-      - cryptpad
-      - /data
-      - "/mnt/assets/config_rules.yaml"
-      # - "/mnt/assets/dependencies.yaml"
-    mounts:
-      compat: /mnt/assets
-      main: /data
-    io-format: yaml
-properties: ~
-  # type: docker
-  # image: compat
-  # system: true
-  # entrypoint: compat
-  # args:
-  #   - properties
-  #   - /gitea
-  # mounts:
-  #   main: /gitea
-  # io-format: yaml
+    type: script
+properties:
+  type: script
 dependencies: {}
 volumes:
   main:
@@ -120,7 +76,7 @@ backup:
       - duplicity
       - create
       - /mnt/backup
-      - /gitea
+      - /root/data
     mounts:
       BACKUP: /mnt/backup
       main: /root/data
@@ -134,43 +90,17 @@ backup:
       - duplicity
       - restore
       - /mnt/backup
-      - /gitea
+      - /root/data
     mounts:
       BACKUP: /mnt/backup
       main: /root/data
     io-format: yaml
-# actions:
-#   reset-root-user:
-#     name: Reset Root User
-#     description: Resets your root user (the first user) to username "admin" and a random password; restores any lost admin privileges.
-#     warning: This will invalidate existing sessions and password managers if you have them set up.
-#     allowed-statuses:
-#       - stopped
-#     implementation:
-#       type: docker
-#       image: main
-#       system: false
-#       entrypoint: docker_entrypoint.sh
-#       args: ["reset-root-user"]
-#       mounts:
-#         main: /root
-#       io-format: json
 migrations:
   from:
     "*":
-      type: docker
-      image: main
-      system: false
-      entrypoint: "/bin/echo"
-      args: ['{"configured": true}']
-      io-format: json
-      inject: false
+      type: script
+      args: ["from"]
   to:
     "*":
-      type: docker
-      image: main
-      system: false
-      entrypoint: "/bin/echo"
-      args: ['{"configured": true}']
-      io-format: json
-      inject: false
+      type: script
+      args: ["to"]
