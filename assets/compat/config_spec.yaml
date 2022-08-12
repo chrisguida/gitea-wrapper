@@ -1,8 +1,0 @@
-tor-address:
-  name: Tor Address
-  description: The Tor address for the main ui.
-  type: pointer
-  subtype: package
-  package-id: gitea
-  target: tor-address
-  interface: main

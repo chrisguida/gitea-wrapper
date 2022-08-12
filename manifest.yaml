@@ -55,8 +55,6 @@ dependencies: {}
 volumes:
   main:
     type: data
-  compat:
-    type: assets
 interfaces:
   main:
     name: Web UI / Git HTTPS/SSH
