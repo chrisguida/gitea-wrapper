@@ -15,4 +15,8 @@ export GITEA__server__DOMAIN=$DOMAIN
 export GITEA__server__ROOT_URL="$PROTOCOL://$DOMAIN/"
 export GITEA__server__SSH_DOMAIN=$DOMAIN
 
+if [ "$(yq ".disable-registration" /data/start9/config.yaml)" = "true" ]; then
+    export GITEA__service__DISABLE_REGISTRATION=true
+fi
+
 exec tini /usr/bin/entrypoint -- /bin/s6-svscan /etc/s6

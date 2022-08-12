@@ -34,6 +34,16 @@ health-checks:
     args: ["web"]
     io-format: json
     inject: true
+  user-signups-off:
+    name: User Signups Off
+    type: docker
+    image: main
+    system: false
+    entrypoint: check-user-signups-off.sh
+    args: []
+    mounts: {}
+    io-format: yaml
+    inject: true
 config:
   get:
     type: script
