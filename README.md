@@ -1,16 +1,16 @@
 # Wrapper for gitea
 
-`gitea` is a simple, minimal project to serve as a template for creating an app
-for the Embassy.
+`Gitea` is a community managed lightweight code hosting solution written in Go.
+It is published under the MIT license.
 
 ## Dependencies
 
 - [docker](https://docs.docker.com/get-docker)
 - [docker-buildx](https://docs.docker.com/buildx/working-with-buildx/)
 - [yq](https://mikefarah.gitbook.io/yq)
-- [toml](https://crates.io/crates/toml-cli)
-- [embassy-sdk](https://github.com/Start9Labs/embassy-os/tree/master/backend)
+- [deno](https://deno.land/)
 - [make](https://www.gnu.org/software/make/)
+- [embassy-sdk](https://github.com/Start9Labs/embassy-os/tree/master/backend)
 
 ## Build enviroment
 
@@ -44,52 +44,42 @@ docker run --privileged --rm linuxkit/binfmt:v0.8
 sudo snap install yq
 ```
 
-5. Install essentials build packages
-
-```
-sudo apt-get install -y build-essential openssl libssl-dev libc6-dev clang libclang-dev ca-certificates
-```
-
-6. Install Rust
-
-```
-curl https://sh.rustup.rs -sSf | sh
-# Choose nr 1 (default install)
-source $HOME/.cargo/env
-```
-
-7. Install deno
+5. Install deno
 
 ```
 sudo snap install deno
 ```
 
-8. Build and install embassy-sdk
+6. Install essentials build packages
 
 ```
-cd ~/ && git clone https://github.com/Start9Labs/embassy-os.git
-cd embassy-os/backend/
-./install-sdk.sh
+sudo apt-get install -y build-essential openssl libssl-dev libc6-dev clang libclang-dev ca-certificates
 ```
+
+7. Build and install embassy-sdk
+
+```
+cd ~/ && git clone --recursive https://github.com/Start9Labs/embassy-os.git
+make sdk
+embassy-sdk init
+```
+
+Now you are ready to build your gitea service
 
 ## Cloning
 
-Clone the project locally. Note the submodule link to the original project(s).
+Clone the gitea wrapper locally. Note the submodule link to the original
+project.
 
 ```
 git clone https://github.com/Start9Labs/gitea-wrapper.git
 cd gitea-wrapper
-```
-
-During the 0.3.0 beta (you won't need this after merge to main), run:
-
-```
-git checkout integration/0.3.0
+git submodule update --init
 ```
 
 ## Building
 
-To build the project, run the following commands:
+To build the gitea service, run the following commands:
 
 ```
 make
@@ -97,17 +87,22 @@ make
 
 ## Installing (on Embassy)
 
-SSH into an Embassy device. `scp` the `.s9pk` to any directory from your local
-machine. Run the following command to install the package:
+Run the following commands to install:
+
+> :information_source: Change embassy-q1w2e3r.local to your Embassy address
 
 ```
 embassy-cli auth login
-#Enter your embassy password then run:
-embassy-cli package install /path/to/gitea.s9pk
+#Enter your embassy password
+embassy-cli --host https://embassy-q1w2e3r4.local package install gitea.s9pk
 ```
 
-## Verify Install
+If you already have your `embassy-cli` config file setup with a default `host`,
+you can install simply by running:
 
-Go to your Embassy Services page, select Hello World and start the service.
+```
+make install
+```
 
-#Done
+**Tip:** You can also install the gitea.s9pk using **Sideload Service** under
+the **Embassy>SETTINGS** section.
