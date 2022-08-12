@@ -12,10 +12,10 @@ else
     PROTOCOL=http
 fi
 
-if ! [ -f secret-key.txt ]; then
-    cat /dev/urandom | head -c 32 | base64 > secret-key.txt
+if ! [ -f /data/start9/secret-key.txt ]; then
+    cat /dev/urandom | head -c 32 | base64 > /data/start9/secret-key.txt
 fi
-SECRET_KEY=$(cat secret-key.txt)
+SECRET_KEY=$(cat /data/start/secret-key.txt)
 
 export GITEA__server__DOMAIN=$DOMAIN
 export GITEA__server__ROOT_URL="$PROTOCOL://$DOMAIN/"
