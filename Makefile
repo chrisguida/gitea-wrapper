@@ -22,7 +22,7 @@ gitea.s9pk: manifest.yaml image.tar instructions.md scripts/embassy.js
 	embassy-sdk pack
 
 image.tar: Dockerfile docker_entrypoint.sh check-web.sh
-	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --tag start9/gitea/main:$(VERSION) --platform=linux/arm64 -o type=docker,dest=image.tar .
+	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --tag start9/gitea/main:$(VERSION) --platform=linux/amd64 -o type=docker,dest=image.tar .
 
 scripts/embassy.js: $(TS_FILES)
 	deno bundle scripts/embassy.ts scripts/embassy.js
