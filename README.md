@@ -107,6 +107,6 @@ the **Embassy > Settings** section.
 
 ## Verify Install
 
-Go to your Embassy Services page, select **Gitea**, configure and start the service. Then, verify it's interfaces are accessible.
+Go to your Embassy Services page, select **Gitea**, configure and start the service. Then, verify its interfaces are accessible.
 
 **Done!** 
