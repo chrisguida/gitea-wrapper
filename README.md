@@ -105,7 +105,7 @@ make install
 > **Tip:** You can also install the gitea.s9pk using **Sideload Service** under
 the **Embassy > Settings** section.
 
-## Verify Install
+### Verify Install
 
 Go to your Embassy Services page, select **Gitea**, configure and start the service. Then, verify its interfaces are accessible.
 
