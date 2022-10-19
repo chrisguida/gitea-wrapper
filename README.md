@@ -5,6 +5,8 @@ It is published under the MIT license. This repository creates the `s9pk` packag
 
 ## Dependencies
 
+The following set of dependencies are required to build this project. You can find detailed steps to setup your environment below and in the service packaging [documentation](https://github.com/Start9Labs/service-pipeline#development-environment).
+
 - [docker](https://docs.docker.com/get-docker)
 - [docker-buildx](https://docs.docker.com/buildx/working-with-buildx/)
 - [yq](https://mikefarah.gitbook.io/yq)
