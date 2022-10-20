@@ -24,11 +24,11 @@ clean:
 	if ! [ -z "$(ARCH)" ]; then cp docker-images/$(ARCH).tar image.tar; fi
 	embassy-sdk pack
 
-docker-images/aarch64.tar: Dockerfile docker_entrypoint.sh check-web.sh
+docker-images/aarch64.tar: Dockerfile docker_entrypoint.sh
 	mkdir -p docker-images
 	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --tag start9/$(PKG_ID)/main:$(PKG_VERSION) --platform=linux/arm64 -o type=docker,dest=docker-images/aarch64.tar .
 
-docker-images/x86_64.tar: Dockerfile docker_entrypoint.sh check-web.sh
+docker-images/x86_64.tar: Dockerfile docker_entrypoint.sh
 	mkdir -p docker-images
 	DOCKER_CLI_EXPERIMENTAL=enabled docker buildx build --tag start9/$(PKG_ID)/main:$(PKG_VERSION) --platform=linux/amd64 -o type=docker,dest=docker-images/x86_64.tar .
 
