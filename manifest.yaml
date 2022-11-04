@@ -1,8 +1,8 @@
 id: gitea
 title: "Gitea"
-version: 1.16.9
+version: 1.16.9.1
 release-notes: |
-    Initial release of Gitea for EmbassyOS
+    Upgrade to run on x86_64 architecture
 license: MIT
 wrapper-repo: "https://github.com/chrisguida/gitea-wrapper"
 upstream-repo: "https://github.com/go-gitea/gitea"
@@ -26,24 +26,12 @@ main:
     main: /data
 health-checks:
   web:
-    name: HTTP Interface (Web & Git HTTP over Tor)
-    success-message: Gitea is ready to be visited in your browser, and your git repos can now be interacted with.
-    type: docker
-    image: main
-    entrypoint: check-web.sh
-    args: ["web"]
-    io-format: json
-    inject: true
+    name: Web & Git HTTP Tor Interfaces
+    success-message: Gitea is ready to be visited in a web browser and git can be used with SSH over TOR.
+    type: script
   user-signups-off:
     name: User Signups Off
-    type: docker
-    image: main
-    system: false
-    entrypoint: check-user-signups-off.sh
-    args: []
-    mounts: {}
-    io-format: yaml
-    inject: true
+    type: script
 config:
   get:
     type: script

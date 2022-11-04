@@ -1,21 +1,22 @@
 # Wrapper for gitea
 
-`Gitea` is a community managed lightweight code hosting solution written in Go.
-It is published under the MIT license.
+Gitea is a community managed lightweight code hosting solution written in Go.
+It is published under the MIT license. This repository creates the `s9pk` package that is installed to run `gitea` on [embassyOS](https://github.com/Start9Labs/embassy-os/).
 
 ## Dependencies
+
+Install the system dependencies below to build this project by following the instructions in the provided links. You can also find detailed steps to setup your environment in the service packaging [documentation](https://github.com/Start9Labs/service-pipeline#development-environment).
 
 - [docker](https://docs.docker.com/get-docker)
 - [docker-buildx](https://docs.docker.com/buildx/working-with-buildx/)
 - [yq](https://mikefarah.gitbook.io/yq)
-- [deno](https://deno.land/)
+- [deno](https://deno.land/#installation)
 - [make](https://www.gnu.org/software/make/)
 - [embassy-sdk](https://github.com/Start9Labs/embassy-os/tree/master/backend)
 
-## Build enviroment
+## Build environment
 
-Prepare your EmbassyOS build enviroment. In this example we are using Ubuntu
-20.04.
+Prepare your EmbassyOS build environment. In this example we are using Ubuntu 20.04.
 
 1. Install docker
 
@@ -64,12 +65,11 @@ make sdk
 embassy-sdk init
 ```
 
-Now you are ready to build your gitea service
+Now you are ready to build the `gitea` package
 
 ## Cloning
 
-Clone the gitea wrapper locally. Note the submodule link to the original
-project.
+Clone the Gitea Wrapper locally. Note the submodule link to the original project.
 
 ```
 git clone https://github.com/Start9Labs/gitea-wrapper.git
@@ -79,22 +79,22 @@ git submodule update --init
 
 ## Building
 
-To build the gitea service, run the following commands:
+To build the `gitea` package, run the following command:
 
 ```
 make
 ```
 
-## Installing (on Embassy)
+## Installing (on embassyOS)
 
 Run the following commands to install:
 
-> :information_source: Change embassy-q1w2e3r.local to your Embassy address
+> :information_source: Change embassy-server-name.local to your Embassy address
 
 ```
 embassy-cli auth login
-#Enter your embassy password
-embassy-cli --host https://embassy-q1w2e3r4.local package install gitea.s9pk
+# Enter your embassy password
+embassy-cli --host https://embassy-server-name.local package install gitea.s9pk
 ```
 
 If you already have your `embassy-cli` config file setup with a default `host`,
@@ -104,5 +104,11 @@ you can install simply by running:
 make install
 ```
 
-**Tip:** You can also install the gitea.s9pk using **Sideload Service** under
-the **Embassy>SETTINGS** section.
+> **Tip:** You can also install the gitea.s9pk using **Sideload Service** under
+the **Embassy > Settings** section.
+
+### Verify Install
+
+Go to your Embassy Services page, select **Gitea**, configure and start the service. Then, verify its interfaces are accessible.
+
+**Done!** 
