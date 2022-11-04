@@ -2,7 +2,8 @@ id: gitea
 title: "Gitea"
 version: 1.16.9.1
 release-notes: |
-    Upgrade to run on x86_64 architecture
+  - Upgrade to run on x86_64 architecture
+  - Update to new eOS v0.3.3 APIs
 license: MIT
 wrapper-repo: "https://github.com/chrisguida/gitea-wrapper"
 upstream-repo: "https://github.com/go-gitea/gitea"
@@ -17,13 +18,13 @@ assets:
   license: gitea/LICENSE
   icon: icon.png
   instructions: instructions.md
-  docker-images: image.tar
+containers:
+  main:
+    image: main
+    mounts:
+      main: /data
 main:
-  type: docker
-  image: main
-  entrypoint: "/usr/local/bin/docker_entrypoint.sh"
-  mounts:
-    main: /data
+  type: script
 health-checks:
   web:
     name: Web & Git HTTP Tor Interfaces
