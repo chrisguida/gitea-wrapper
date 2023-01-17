@@ -1,6 +1,6 @@
 id: gitea
 title: "Gitea"
-version: 1.16.9.1
+version: 1.16.9.2
 release-notes: |
   * Upgrade to run on x86_64 architecture
   * Minor bugfixes
@@ -18,7 +18,6 @@ assets:
   license: gitea/LICENSE
   icon: icon.png
   instructions: instructions.md
-  docker-images: image.tar
 main:
   type: docker
   image: main
