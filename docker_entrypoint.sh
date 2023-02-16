@@ -29,6 +29,20 @@ else
     export GITEA__service__DISABLE_REGISTRATION=false
 fi
 
+if [ "$(yq ".email-notifications.enabled" /data/start9/config.yaml)" = "true" ]; then
+    export GITEA__mailer__ENABLED=true
+    export GITEA__mailer__SMTP_ADDR=$(yq ".email-notifications.smtp-settings.smtp-host" /data/start9/config.yaml)
+    export GITEA__mailer__SMTP_PORT=$(yq ".email-notifications.smtp-settings.smtp-port" /data/start9/config.yaml)
+    export GITEA__mailer__USER=$(yq ".email-notifications.smtp-settings.smtp-user" /data/start9/config.yaml)
+    export GITEA__mailer__PASSWD=$(yq ".email-notifications.smtp-settings.smtp-pass" /data/start9/config.yaml)
+    FULL_FROM="$(yq ".email-notifications.smtp-settings.from-name" /data/start9/config.yaml) <$GITEA__mailer__USER@$GITEA__mailer__SMTP_ADDR>"
+    export GITEA__mailer__FROM=$FULL_FROM
+    # export GITEA__mailer__MAILER_TYPE=smtp
+    export GITEA__mailer__IS_TLS_ENABLED=true
+else
+    export GITEA__mailer__ENABLED=false
+fi
+
 
 
 exec tini /usr/bin/entrypoint -- /bin/s6-svscan /etc/s6
